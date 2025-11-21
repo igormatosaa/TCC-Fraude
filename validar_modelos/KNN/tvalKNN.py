@@ -30,7 +30,6 @@ print(df['is_fraud'].value_counts())
 
 # === FUNÇÃO DE TRATAMENTO ===
 def tratar(df):
-    # Conversão de datas e cálculo da idade
     df['trans_date'] = pd.to_datetime(df['trans_date'], errors='coerce')
     df['dob'] = pd.to_datetime(df['dob'], errors='coerce')
     dias_de_vida = (df['trans_date'] - df['dob']).dt.days
@@ -40,7 +39,6 @@ def tratar(df):
     idade_com_nan.fillna(mediana_idade, inplace=True)
     df['idade'] = idade_com_nan.astype(int)
 
-    # Colunas para remover
     colunas_para_remover = [
         'gender', 'city', 'state', 'zip', 'profile', 'merchant', 'ssn',
         'cc_num', 'first', 'last', 'street', 'acct_num', 'trans_num', 
@@ -93,7 +91,7 @@ print(df.info())
 print("\nDistribuição das classes APÓS tratamento:")
 print(df['is_fraud'].value_counts())
 
-# 1. Definição do modelo base (igual)
+# 1. Definição do modelo base
 model = KNeighborsClassifier(
     n_neighbors=3,
     weights='distance',
@@ -166,7 +164,7 @@ for metrica, valores in resultados.items():
 print("\n=== MATRIZ DE CORRELAÇÃO ===")
 corr = df.corr()
 
-# Visualização (Heatmap)
+# === VISUALIZAÇÃO (HEATMAP) ===
 plt.figure(figsize=(12, 10))
 sns.heatmap(corr, annot=True, fmt=".2f", cmap='coolwarm', linewidths=0.5)
 plt.title("Matriz de Correlação Completa")

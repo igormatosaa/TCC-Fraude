@@ -86,7 +86,7 @@ print(df['is_fraud'].value_counts())
 X = df.drop('is_fraud', axis=1)
 y = df['is_fraud']
 
-# === MODELO LIGHTGBM (sem alterar nada) ===
+# === MODELO LIGHTGBM ===
 lgbm_model = lgbm.LGBMClassifier(
     subsample=0.9,
     reg_lambda=0,
